@@ -34,7 +34,7 @@ def _autojump_xonsh():
         else:
             call(['autojump', '--add', os.path.abspath(os.curdir)])
 
-    $FORMATTER_DICT['update_autojump'] = autojump_add_to_database
+    $PROMPT_FIELDS['update_autojump'] = autojump_add_to_database
     $PROMPT = $PROMPT.replace("{prompt_end}", "{prompt_end}{update_autojump}")
 
     def j(args, stdin=None):
