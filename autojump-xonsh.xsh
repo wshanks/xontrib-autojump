@@ -7,7 +7,7 @@ def _autojump_xonsh():
     import platform
     from subprocess import call, check_output, DEVNULL
     import sys
-    $BASH_COMPLETIONS.append(os.path.join($AUTOJUMP_DIR,
+    $BASH_COMPLETIONS.append(os.path.join($PLUGIN_DIR,
                                           'autojump-completion.bash'))
 
     import xonsh.dirstack as xds
@@ -26,16 +26,14 @@ def _autojump_xonsh():
     if not os.path.exists(os.path.dirname($AUTOJUMP_ERROR_PATH[0])):
         os.makedirs(os.path.dirname($AUTOJUMP_ERROR_PATH[0]))
 
-    def autojump_add_to_database():
+    @events.on_chdir
+    def autojump_add_to_database(olddir, newdir, **kwargs):
         if os.path.exists(os.path.dirname($AUTOJUMP_ERROR_PATH[0])):
             with open($AUTOJUMP_ERROR_PATH[0], 'w+') as f:
-                call(['autojump', '--add', os.path.abspath(os.curdir)],
+                call(['autojump', '--add', os.path.abspath(newdir)],
                      stderr=f, stdout=DEVNULL)
         else:
-            call(['autojump', '--add', os.path.abspath(os.curdir)])
-
-    $PROMPT_FIELDS['update_autojump'] = autojump_add_to_database
-    $PROMPT = $PROMPT.replace("{prompt_end}", "{prompt_end}{update_autojump}")
+            call(['autojump', '--add', os.path.abspath(newdir)])
 
     def j(args, stdin=None):
         if args and args[0][0] == '-' and args[0] != '--':
@@ -94,9 +92,9 @@ def _autojump_xonsh():
 
     global aliases
     aliases['j'] = j
-    aliases['jc'] = jc
-    aliases['jo'] = jo
-    aliases['jco'] = jco
+#    aliases['jc'] = jc
+#    aliases['jo'] = jo
+#    aliases['jco'] = jco
 
 _autojump_xonsh()
 del _autojump_xonsh
