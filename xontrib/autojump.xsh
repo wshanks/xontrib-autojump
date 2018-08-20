@@ -90,9 +90,9 @@ def _autojump_xonsh():
 
     global aliases
     aliases['j'] = j
-#    aliases['jc'] = jc
-#    aliases['jo'] = jo
-#    aliases['jco'] = jco
+    aliases['jc'] = jc
+    aliases['jo'] = jo
+    aliases['jco'] = jco
 
     # TODO: improve it
     def completions(pref, *args):

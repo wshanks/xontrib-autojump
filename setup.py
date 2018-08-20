@@ -8,8 +8,8 @@ setup(
     author='Sagar Tewari',
     author_email='iaansagar@gmail.com',
     description='autojump support for xonsh',
-    packages=['xontrib', 'autocompletion'],
-    package_dir={'xontrib': 'xontrib', 'autocompletion': 'autocompletion'},
-    package_data={'xontrib': ['*.xsh'], 'autocompletion': 'completion.*'},
+    packages=['xontrib'],
+    package_dir={'xontrib': 'xontrib'},
+    package_data={'xontrib': ['*.xsh']},
     platforms='any',
 )
