@@ -1,10 +1,37 @@
 # Xonsh configuration for autojump
-These files set up autojump for use in the [xonsh shell](https://xon.sh) in the same way that it is set up in other shells. To use, save these files in a directory (e.g. `$HOME/.config/autojump`) and then add the following to `.xonshrc` (changing `$AUTOJUMP_DIR` as necessary):
 
-```
-import os
-$AUTOJUMP_DIR = os.path.join($HOME, '.config/autojump')
-source @(os.path.join($AUTOJUMP_DIR, 'autojump.xsh'))
+Sets up [autojump](https://github.com/wting/autojump) for use with
+[xonsh](https://github.com/xonsh/xonsh) shell.
+
+## Usage
+
+Load it interactively or in your xonsh startup file like this:
+
+```bash
+xontrib load autojump
 ```
 
-Note that `$AUTOJUMP_DIR` needs to be defined so that `autojump.xsh` knows where to find `autojump-completion.bash` (I haven't found a way for a `source`'d xonsh file to determine its directory).
+and use these aliases:
+
+    j		'autojump' to a directory
+    jc		'autojump' to a child directory
+    jo		'autojump' to a directory in the default file manager
+    jco		'autojump' to a child directory in the default file manager
+
+
+## Installation
+
+Install from source with:
+
+```bash
+python setup.py install
+```
+
+or from pypi with
+
+```bash
+pip install xontrib-autojump
+```
+
+
+
