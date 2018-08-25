@@ -31,7 +31,7 @@ def _autojump_xonsh():
                 call(['autojump', '--add', os.path.abspath(newdir)],
                      stderr=f, stdout=DEVNULL)
         else:
-            call(['autojump', '--add', os.path.abspath(newdir)])
+            call(['autojump', '--add', os.path.abspath(newdir)], stdout=DEVNULL, stderr=DEVNULL)
 
     def j(args, stdin=None):
         if args and args[0][0] == '-' and args[0] != '--':
@@ -94,12 +94,16 @@ def _autojump_xonsh():
     aliases['jo'] = jo
     aliases['jco'] = jco
 
-    # TODO: improve it
     def completions(pref, *args):
-        a=!(autojump --complete @(pref))
+        firstSpace = pref.index(' ')
+        firstWord = pref[:firstSpace]
+        if firstWord != 'j' or firstWord != 'jc' or \
+            firstWord != 'jo' or firstWord != 'jco':
+            return None
+        a=!(autojump --complete @(pref[firstSpace+1:]))
         return set(a.output.split('\n'))
 
-    completer add j completions "start"
+    completer add j completions end
 
 _autojump_xonsh()
 del _autojump_xonsh
