@@ -19,6 +19,9 @@ and use these aliases:
     jco		'autojump' to a child directory in the default file manager
 
 
+Target paths will be printed if the environment variable `AUTOJUMP_PRINT_DIR`
+is set to a truthy value
+
 ## Installation
 
 Install from source with:

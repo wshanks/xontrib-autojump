@@ -31,6 +31,9 @@ def _autojump_xonsh():
         else:
             call(['autojump', '--add', os.path.abspath(newdir)], stdout=DEVNULL, stderr=DEVNULL)
 
+    if 'AUTOJUMP_PRINT_DIR' not in ${...}:
+        $AUTOJUMP_PRINT_DIR = False
+
     def j(args, stdin=None):
         if args and args[0][0] == '-' and args[0] != '--':
             call(['autojump'] + args)
@@ -39,8 +42,8 @@ def _autojump_xonsh():
         output = check_output(['autojump'] + args,
                               universal_newlines=True).strip()
         if os.path.isdir(output):
-            # TODO: print with color?
-            print(output)
+            if $AUTOJUMP_PRINT_DIR:
+                print(output)
             xds.cd([output])
         else:
             print('autojump directory {} not found'.format(' '.join(args)))
@@ -103,7 +106,9 @@ def _autojump_xonsh():
         a=!(autojump --complete @(line[firstSpace+1:].split(' ')))
         return set([e for e in a.out.split('\n') if e != ''])
 
-    completer remove autojump
+    if !(completer list|ag autojump):
+        completer remove autojump
+
     completer add autojump completions start
 
 _autojump_xonsh()
