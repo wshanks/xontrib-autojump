@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='xontrib-autojump',
-    version='0.1',
+    version='0.2',
     url='https://github.com/gsaga/autojump-xonsh',
     license='MIT',
     author='Sagar Tewari',
