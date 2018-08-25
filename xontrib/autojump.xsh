@@ -1,5 +1,3 @@
-$AUTOJUMP_SOURCED = 1
-
 def _autojump_xonsh():
     '''Wrapper function to avoid polluting shell name space when this file is
     sourced'''
@@ -94,16 +92,20 @@ def _autojump_xonsh():
     aliases['jo'] = jo
     aliases['jco'] = jco
 
-    def completions(pref, *args):
-        firstSpace = pref.index(' ')
-        firstWord = pref[:firstSpace]
-        if firstWord != 'j' or firstWord != 'jc' or \
-            firstWord != 'jo' or firstWord != 'jco':
+    def completions(pref, line, *args):
+        if ' ' not in line:
+            return None # this shouldn't be triggered for command completion 
+        firstSpace = line.index(' ')
+        firstWord = line[:firstSpace]
+        if firstWord != 'j' and firstWord != 'jc' and \
+            firstWord != 'jo' and firstWord != 'jco':
             return None
-        a=!(autojump --complete @(pref[firstSpace+1:]))
-        return set(a.output.split('\n'))
+        a=!(autojump --complete @(line[firstSpace+1:].split(' ')))
+        return set([e for e in a.out.split('\n') if e != ''])
 
-    completer add j completions end
+    completer remove autojump
+    completer add autojump completions start
 
 _autojump_xonsh()
+
 del _autojump_xonsh
