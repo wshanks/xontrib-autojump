@@ -12,7 +12,7 @@ def _autojump_xonsh():
     if platform.system() == "Darwin":
         $AUTOJUMP_ERROR_PATH = os.path.join($HOME,
                                             "Library/autojump/errors.log")
-    elif "XDG_DATA_HOME" in __xonsh_env__:
+    elif "XDG_DATA_HOME" in __xonsh__.env:
         $AUTOJUMP_ERROR_PATH = os.path.join($XDG_DATA_HOME,
                                             "autojump/errors.log")
     else:
