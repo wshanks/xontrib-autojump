@@ -106,7 +106,7 @@ def _autojump_xonsh():
         a=!(autojump --complete @(line[firstSpace+1:].split(' ')))
         return set([e for e in a.out.split('\n') if e != ''])
 
-    if !(completer list|ag autojump):
+    if !(completer list|grep autojump):
         completer remove autojump
 
     completer add autojump completions start
