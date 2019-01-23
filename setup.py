@@ -4,8 +4,8 @@ long_description = open('README.md').read()
 
 setup(
     name='xontrib-autojump',
-    version='0.8',
-    url='https://github.com/gsaga/autojump-xonsh',
+    version='1.0',
+    url='https://github.com/sagartewari01/autojump-xonsh',
     license='MIT',
     author='Sagar Tewari',
     author_email='iaansagar@gmail.com',
