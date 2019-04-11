@@ -8,6 +8,14 @@ def _autojump_xonsh():
 
     import xonsh.dirstack as xds
 
+    # tell autojump it's already sourced to fix a traceback
+    os.putenv('AUTOJUMP_SOURCED', '1')
+
+    # the $PATH variable from xonsh isn't respected by python's subprocess so
+    # put it in the environment
+    os.environ["PATH"] = ':'.join($PATH)
+
+
     # set error file location
     if platform.system() == "Darwin":
         $AUTOJUMP_ERROR_PATH = os.path.join($HOME,
