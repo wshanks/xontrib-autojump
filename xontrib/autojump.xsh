@@ -111,8 +111,7 @@ def _autojump_xonsh():
         a=!(autojump --complete @(line[firstSpace+1:].split(' ')))
         return set([e for e in a.out.split('\n') if e != ''])
 
-    completer remove autojump
-    completer add autojump completions start
+    __xonsh__.completers["autojump"] = completions
 
 _autojump_xonsh()
 
