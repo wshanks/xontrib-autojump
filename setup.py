@@ -4,7 +4,7 @@ long_description = open('README.md').read()
 
 setup(
     name='xontrib-autojump',
-    version='1.3',
+    version='1.4',
     url='https://github.com/willsALMANJ/autojump-xonsh',
     license='GPLv3+',
     author='Will Shanks',
@@ -14,6 +14,6 @@ setup(
     long_description_content_type='text/markdown',
     packages=['xontrib'],
     package_dir={'xontrib': 'xontrib'},
-    package_data={'xontrib': ['*.xsh']},
+    package_data={'xontrib': ['*.py']},
     platforms='any',
 )
