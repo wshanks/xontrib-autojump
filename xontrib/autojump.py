@@ -13,27 +13,27 @@ def _autojump_xonsh():
 
     # the $PATH variable from xonsh isn't respected by python's subprocess so
     # put it in the environment
-    os.environ["PATH"] = ':'.join($PATH)
+    os.environ["PATH"] = ':'.join(__xonsh__.env['PATH'])
 
 
     # set error file location
     if platform.system() == "Darwin":
-        $AUTOJUMP_ERROR_PATH = os.path.join($HOME,
+        __xonsh__.env['AUTOJUMP_ERROR_PATH'] = os.path.join(__xonsh__.env['HOME'],
                                             "Library/autojump/errors.log")
     elif "XDG_DATA_HOME" in __xonsh__.env:
-        $AUTOJUMP_ERROR_PATH = os.path.join($XDG_DATA_HOME,
+        __xonsh__.env['AUTOJUMP_ERROR_PATH'] = os.path.join(__xonsh__.env['XDG_DATA_HOME'],
                                             "autojump/errors.log")
     else:
-        $AUTOJUMP_ERROR_PATH = os.path.join($HOME,
+        __xonsh__.env['AUTOJUMP_ERROR_PATH'] = os.path.join(__xonsh__.env['HOME'],
                                             ".local/share/autojump/errors.log")
 
-    if not os.path.exists(os.path.dirname($AUTOJUMP_ERROR_PATH[0])):
-        os.makedirs(os.path.dirname($AUTOJUMP_ERROR_PATH[0]))
+    if not os.path.exists(os.path.dirname(__xonsh__.env['AUTOJUMP_ERROR_PATH'][0])):
+        os.makedirs(os.path.dirname(__xonsh__.env['AUTOJUMP_ERROR_PATH'][0]))
 
     @events.on_chdir
     def autojump_add_to_database(olddir, newdir, **kwargs):
-        if os.path.exists(os.path.dirname($AUTOJUMP_ERROR_PATH[0])):
-            with open($AUTOJUMP_ERROR_PATH[0], 'w+') as f:
+        if os.path.exists(os.path.dirname(__xonsh__.env['AUTOJUMP_ERROR_PATH'][0])):
+            with open(__xonsh__.env['AUTOJUMP_ERROR_PATH'][0], 'w+') as f:
                 call(['autojump', '--add', os.path.abspath(newdir)],
                      stderr=f, stdout=DEVNULL)
         else:
@@ -108,7 +108,7 @@ def _autojump_xonsh():
         if firstWord != 'j' and firstWord != 'jc' and \
             firstWord != 'jo' and firstWord != 'jco':
             return None
-        a=!(autojump --complete @(line[firstSpace+1:].split(' ')))
+        a = __xonsh__.subproc_captured_stdout(['autojump','--complete', line[firstSpace+1:].split(' ')])
         return set([e for e in a.out.split('\n') if e != ''])
 
     __xonsh__.completers["autojump"] = completions
